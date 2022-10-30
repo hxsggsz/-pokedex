@@ -1,0 +1,111 @@
+import Image from 'next/image'
+import { useMemo, useState } from 'react'
+import type { GetServerSideProps } from 'next'
+import { Header } from '../components/header/header'
+import { Input } from '../components/input/input'
+import { Buttons } from '../components/buttons/buttons'
+import pokemon from '../../public/pokemon.png'
+
+interface pokemonsProps {
+  pokemons: {
+    entry_number: number,
+    pokemon_species: {
+      name: string
+    }
+  }[]
+}
+
+const Home = ({ pokemons }: pokemonsProps) => {
+  const [ search, setSearch ] = useState('')
+
+  const filteredPokemons = useMemo(() => {
+    const lowerSearch = search.toLowerCase()
+    return pokemons.filter(item => item.pokemon_species.name.toLowerCase().includes(lowerSearch)) 
+  }, [pokemons, search])
+  
+  return (
+    <div className='
+    flex 
+    w-screen
+    h-screen
+    items-center
+    justify-center
+    bg-slate-900'>
+      <div className='
+      w-full
+      h-full 
+      border-2
+      max-w-md 
+      rounded-3xl
+      bg-red-700
+      border-black'>
+
+      <Header />
+
+          <div className='
+          flex 
+          justify-center
+          '>
+            <div className='
+            flex 
+            mt-4 
+            w-96 
+            h-72 
+            border-2 
+            rounded-lg
+            items-center 
+            bg-gray-400
+            border-black 
+            justify-center'>
+            <div className='
+            flex 
+            w-72  
+            h-52 
+            flex-col 
+            border-2 
+            bg-white 
+            rounded-lg
+            items-center 
+            border-black
+            justify-center
+            overflow-hidden'>
+                {search != '' ? filteredPokemons.map(items => (
+                  <div className=' flex m-14 pt-12 pb-12 justify-center items-center center' key={items.entry_number}>
+                    <Image width={200} height={200} src={`https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/${String(items.entry_number).padStart(3, "0")}.png`} alt={items.pokemon_species.name} />
+                  </div>
+                )) : <Image src={pokemon} alt='logo da pokemon escrito pokemon' />}
+            </div>
+          </div>
+        </div>
+        <div className='
+        mt-4
+        flex 
+        items-center 
+        justify-center'>
+          <form>
+            <Input
+            value={search}
+            onChange={event => setSearch(event.target.value)}
+            placeholder='Ensira o nome do pokemon'/>
+          </form>
+        </div>
+
+        <Buttons />
+
+    </div>
+  </div>
+  )
+}
+
+export const getServerSideProps: GetServerSideProps = async ()=> {
+  const respose = await fetch('https://pokeapi.co/api/v2/pokedex/2/')
+  .then(data => data.json())
+  .then(pokemons => pokemons.pokemon_entries)
+  return {
+    props: {
+      pokemons: respose
+    }
+  }
+}
+
+export default Home
