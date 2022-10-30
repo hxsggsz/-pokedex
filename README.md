@@ -9,6 +9,7 @@ esse é um projeto de pokedex usando a API PokeApi para receber os dados dos pok
 nesse projeto foi utilizado:
 <ul>
   <li>tailwindCSS</li>
+  <li>Framer Motion</li>
   <li>Next com React</li>
   <li>typescript</li>
 </ul>
