@@ -1,10 +1,11 @@
 import Image from 'next/image'
+import { motion, AnimatePresence  } from "framer-motion"
 import { useMemo, useState } from 'react'
 import type { GetServerSideProps } from 'next'
-import { Header } from '../components/header/header'
-import { Input } from '../components/input/input'
-import { Buttons } from '../components/buttons/buttons'
 import pokemon from '../../public/pokemon.png'
+import { Input } from '../components/input/input'
+import { Header } from '../components/header/header'
+import { Buttons } from '../components/buttons/buttons'
 
 interface pokemonsProps {
   pokemons: {
@@ -69,11 +70,18 @@ const Home = ({ pokemons }: pokemonsProps) => {
             border-black
             justify-center
             overflow-hidden'>
+              <AnimatePresence >
                 {search != '' ? filteredPokemons.map(items => (
-                  <div className=' flex m-14 pt-12 pb-12 justify-center items-center center' key={items.entry_number}>
+                  <motion.div
+                  className=' flex m-14 pt-12 pb-12 justify-center items-center center' 
+                  initial={{opacity: 0, x: -100}}
+                  animate={{opacity: 1, x: 0}}
+                  exit={{opacity: 0, x: 100}}
+                  key={items.entry_number}>
                     <Image width={200} height={200} src={`https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/${String(items.entry_number).padStart(3, "0")}.png`} alt={items.pokemon_species.name} />
-                  </div>
+                  </motion.div>
                 )) : <Image src={pokemon} alt='logo da pokemon escrito pokemon' />}
+                    </AnimatePresence>
             </div>
           </div>
         </div>
