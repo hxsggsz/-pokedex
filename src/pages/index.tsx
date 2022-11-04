@@ -59,29 +59,33 @@ const Home = ({ pokemons }: pokemonsProps) => {
             border-black 
             justify-center'>
             <div className='
-            flex 
             w-72  
-            h-52 
-            flex-col 
+            h-60 
             border-2 
             bg-white 
             rounded-lg
-            items-center 
             border-black
             justify-center
             overflow-hidden'>
+
               <AnimatePresence >
-                {search != '' ? filteredPokemons.map(items => (
-                  <motion.div
-                  className=' flex m-14 pt-12 pb-12 justify-center items-center center' 
-                  initial={{opacity: 0, x: -100}}
-                  animate={{opacity: 1, x: 0}}
-                  exit={{opacity: 0, x: 100}}
-                  key={items.entry_number}>
-                    <Image width={200} height={200} src={`https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/${String(items.entry_number).padStart(3, "0")}.png`} alt={items.pokemon_species.name} />
-                  </motion.div>
-                )) : <Image src={pokemon} alt='logo da pokemon escrito pokemon' />}
-                    </AnimatePresence>
+                <motion.ul
+                className='m-12' 
+                initial={{opacity: 0, x: -100}}
+                animate={{opacity: 1, x: 0}}
+                exit={{opacity: 0, x: 100}}>
+                
+              { search != '' ? filteredPokemons.map(items => (
+
+              <li key={items.entry_number}>
+
+                  <Image width={300} height={300} src={`https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/${String(items.entry_number).padStart(3, "0")}.png`} alt={items.pokemon_species.name} />
+  
+              </li>
+              )) : <Image className='mt-20' src={pokemon} alt='logo da pokemon escrito pokemon' /> }
+
+                </motion.ul>
+              </AnimatePresence>
             </div>
           </div>
         </div>
