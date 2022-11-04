@@ -2,7 +2,9 @@
 
 ##
 
-esse é um projeto de pokedex usando a API PokeApi para receber os dados dos pokemons e exibi-los em tela
+esse é um projeto de pokedex usando a API PokeApi para receber os dados dos pokemons e exibi-los em tela.
+
+Teste o projeto: https://pokedex-hxsggsz.vercel.app/
 
 ##
 
