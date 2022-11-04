@@ -68,27 +68,27 @@ const Home = ({ pokemons }: pokemonsProps) => {
             justify-center
             overflow-hidden'>
 
-                <motion.ul
-                className='m-12' 
+                <AnimatePresence >
+                  <motion.ul
+                  className='m-12' 
+                  initial={{opacity: 0, x: -100}}
+                  animate={{opacity: 1, x: 0}}
+                  exit={{opacity: 0, x: 100}}>
+                  
+              { search != '' ? filteredPokemons.map(items => (
+
+                <motion.li key={items.entry_number}
                 initial={{opacity: 0, x: -100}}
                 animate={{opacity: 1, x: 0}}
                 exit={{opacity: 0, x: 100}}>
-              <AnimatePresence >
-                
-              { search != '' ? filteredPokemons.map(items => (
-
-              <motion.li key={items.entry_number}
-              initial={{opacity: 0, x: -100}}
-              animate={{opacity: 1, x: 0}}
-              exit={{opacity: 0, x: 100}}>
 
                   <Image width={300} height={300} src={`https://raw.githubusercontent.com/HybridShivam/Pokemon/master/assets/images/${String(items.entry_number).padStart(3, "0")}.png`} alt={items.pokemon_species.name} />
-  
-              </motion.li>
+    
+                </motion.li>
               )) : <Image className='mt-20' src={pokemon} alt='logo da pokemon escrito pokemon' /> }
 
-              </AnimatePresence>
                 </motion.ul>
+              </AnimatePresence>
             </div>
           </div>
         </div>
